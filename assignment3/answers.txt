@@ -1,0 +1,24 @@
+Part 1 - Excited Speak
+
+Using sed, create a filter that will turn a simple phrase into an excited phrase. It should turn every period (.) into an exclamation mark (!), and if the period was at the end of the line, it should replace it with two exclamation marks instead of just one. Bring your tutor a transcript showing this filter working on a variety of input.
+
+Answer: sed -e 's/\.$/!!/g' -e 's/\./!/g' sed.txt > output.txt
+
+
+Part 2 - Date Reformat
+
+You took over 100 pictures during your New Year's Eve Celebration, and you'd like to list them in chronological order for a slide show. Unfortunately, your camera named the images using an inconvenient convention: img_MM-DD-YY_XX.jpg. MM is the 0 padded month, DD is the 0 padded day of the month, YY is the last 2 digits of the year 0 padded, and XX is the 0 padded nth picture taken that day. (example: On Jan 5, 2006, you took 3 images. They were named img_01-05-06-{00,01,02}.jpg. If you take over 100 images in one day, the XX will be 3 digits long.)
+
+You would like to rename them, so their alphabetical order coincides with their chronological order. Create a for loop which uses sed and mv to rename all your images in the following convention: newyears_YYYY-MM-DD_XXX.jpg. Notice that the 'nth picture of the day' field is now 3 digits long instead of just 2, and the year field is the full year rather than the last 2 digits. Assume the first two digits are 20.
+
+Bring a transcript showing your results to your tutor for checkoff.
+
+The ~cs9e-1/hw/03-grepsed/images.tar.bz2 tarball contains a set of filenames matching the input which you can use for testing.
+
+Answer: 
+
+for x in *.jpg; 
+do
+  y=$(echo $x | sed -e 's/img/newyears/' -e 's/\([0-9]*\)-\([0-9]*\)-\([0-9]*\)/20\3-\1-\2/' -e 's/_\([0-9]\{2\}\.\)/_0\1/');
+  mv $x $y; 
+done
